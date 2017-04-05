@@ -30,7 +30,7 @@ function Engine(canvas)
         }
     }
 
-    this.canvas.touchstart = function (e)
+    this.canvas.ontouchstart = function (e)
     {
         var nearest = self.findNearest();
         if (nearest)
@@ -47,7 +47,7 @@ function Engine(canvas)
         self.mousePos.y = e.clientY - rect.top;
     }
 
-    this.canvas.touchmove = function (e)
+    this.canvas.ontouchmove = function (e)
     {
         var rect = self.canvas.getBoundingClientRect();
         self.mousePos.x = e.clientX - rect.left;

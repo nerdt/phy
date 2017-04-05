@@ -30,6 +30,16 @@ function Engine(canvas)
         }
     }
 
+    this.canvas.touchstart = function (e)
+    {
+        var nearest = self.findNearest();
+        if (nearest)
+        {
+            self.select = self.findNearest();
+            self.select.highLight = true;
+        }
+    }
+
     this.canvas.onmousemove = function (e)
     {
         var rect = self.canvas.getBoundingClientRect();
@@ -37,7 +47,23 @@ function Engine(canvas)
         self.mousePos.y = e.clientY - rect.top;
     }
 
+    this.canvas.touchmove = function (e)
+    {
+        var rect = self.canvas.getBoundingClientRect();
+        self.mousePos.x = e.clientX - rect.left;
+        self.mousePos.y = e.clientY - rect.top;
+    }
+
     this.canvas.onmouseup = function (e)
+    {
+        if (self.select)
+        {
+            self.select.highLight = false;
+            self.select = null;
+        }
+    }
+
+    this.canvas.touchend = function (e)
     {
         if (self.select)
         {
@@ -112,7 +138,7 @@ Engine.prototype.draw = function ()
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.font = '40px serif';
     this.ctx.fillStyle = "rgb(0,0,0)";
-    this.ctx.fillText("使用鼠标拖拽", canvas.width/2 - 90, 100);
+    this.ctx.fillText("使用鼠标拖拽", canvas.width / 2 - 90, 100);
     for (g in this.groupArr)
     {
         var constraints = this.groupArr[g].constraints;
